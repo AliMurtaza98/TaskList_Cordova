@@ -1,36 +1,46 @@
 <!DOCTYPE html>
+<!-- *** PAGINAS VISITADAS ***
+	https://stackoverflow.com/questions/31609623/remove-nearest-li-element-using-jquery
+	https://stackoverflow.com/questions/4981765/jquery-create-list-item-from-user-input-on-click
+	https://stackoverflow.com/questions/9236332/jquery-how-to-empty-input-field
+-->
 <html>
-  <head>
+	<head>
 		<h1> My Favorite Movies </h1>
 		<title> Movies </title>
 		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
-
-  </head>
-  <body>
-    <ul id="myList">
-    </ul>
-	<input id="valor" type="text">
-    <button onClick="AddElement"> Add Element </button>
-	
-	<!--Añadimos 3 elementos por defecto-->
-	<script type="text/javascript">
-	localStorage.clear();
-	localStorage.setItem("1", "Avengers: Endgame");
-    localStorage.setItem("2", "The Dark Knight");
-	localStorage.setItem("3", "Harry Potter and the Philosopher's Stone");
-	var storage_size = localStorage.length;
-	for(var i=0; i<storage_size; i++){
-		var element = localStorage.getItem(localStorage.key(i));
-		var node = $("<li>"+element+"<button>Borrar</button></li>");
-		$("#myList").append(node);
- 
-	}
-	
-	function AddElement(){
-	
-	
-	};
-	</script>
+	</head>
+	<body>
+		<ul id="myList"></ul>
+		<input id="valor" type="text">
+		<button onclick="AddElement()"> Add Element </button>
+		<!--Añadimos 3 elementos por defecto-->
+		<script type="text/javascript">
+			localStorage.clear();
+			localStorage.setItem("1", "Avengers: Endgame");
+			localStorage.setItem("2", "The Dark Knight");
+			localStorage.setItem("3", "Harry Potter and the Philosopher's Stone");
+			var storage_size = localStorage.length;
+			for(var i=0; i<storage_size; i++){
+				var item = localStorage.getItem(localStorage.key(i));
+				var element = $("<li>"+item+"<button>Delete</button></li>");
+				$("#myList").append(element);
+			}
+			<!-- Funcion para añadir elementos en la lista -->
+			function AddElement(){
+				var value = $("#valor").val();
+				localStorage.setItem(storage_size+1, value);
+				var element = $("<li>"+value+"<button>Delete</button></li>");
+				$("#myList").append(element);
+				$('#valor').val('')
+			}
+			<!-- Funcion para eliminar elementos de la lista -->
+				$('ul').on('click','button', 
+				function(){
+				console.log('delete');
+				$(this).closest("li").remove();
+         });
+		</script>
 	</body>
 	<footer>
 		<p>Author: Ali Murtaza</p>
