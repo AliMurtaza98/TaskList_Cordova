@@ -3,16 +3,31 @@
   <head>
 		<h1> My Favorite Movies </h1>
 		<title> Movies </title>
-			
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+
   </head>
   <body>
     <ul id="myList">
-      <li> Avengers: Endgame </li>
-      <li> The Dark Knight </li>
-	  <li> Harry Potter and the Philosopher's Stone </li>
     </ul>
-    <input type="text">
-    <button> Add Element </button>
+	<input id="valor" type="text">
+    <button onClick="AddElement"> Add Element </button>
+	<script type="text/javascript">
+	var storage_size = localStorage.length;
+	localStorage.setItem("1", "Avengers: Endgame");
+    localStorage.setItem("2", "The Dark Knight");
+	localStorage.setItem("3", "Harry Potter and the Philosopher's Stone");
+	for(var i=0; i<storage_size; i++){
+		var element = localStorage.getItem(localStorage.key(i));
+		var node = $("<li>"+element+"<button>Borrar</button></li>");
+		 $("#myList").append(node);
+		 
+	}
+	
+	function AddElement(){
+	
+	
+	};
+	</script>
 	</body>
 	<footer>
 		<p>Author: Ali Murtaza</p>
