@@ -11,6 +11,8 @@
     </ul>
 	<input id="valor" type="text">
     <button onClick="AddElement"> Add Element </button>
+	
+	<!--Añadimos 3 elementos por defecto-->
 	<script type="text/javascript">
 	var storage_size = localStorage.length;
 	localStorage.setItem("1", "Avengers: Endgame");
@@ -20,6 +22,8 @@
 		var element = localStorage.getItem(localStorage.key(i));
 		var node = $("<li>"+element+"<button>Borrar</button></li>");
 		 $("#myList").append(node);
+		  .closest( "li" )
+
 		 
 	}
 	
