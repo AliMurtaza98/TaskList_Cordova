@@ -14,17 +14,16 @@
 	
 	<!--Añadimos 3 elementos por defecto-->
 	<script type="text/javascript">
-	var storage_size = localStorage.length;
+	localStorage.clear();
 	localStorage.setItem("1", "Avengers: Endgame");
     localStorage.setItem("2", "The Dark Knight");
 	localStorage.setItem("3", "Harry Potter and the Philosopher's Stone");
+	var storage_size = localStorage.length;
 	for(var i=0; i<storage_size; i++){
 		var element = localStorage.getItem(localStorage.key(i));
 		var node = $("<li>"+element+"<button>Borrar</button></li>");
-		 $("#myList").append(node);
-		  .closest( "li" )
-
-		 
+		$("#myList").append(node);
+ 
 	}
 	
 	function AddElement(){
