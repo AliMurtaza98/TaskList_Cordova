@@ -1,62 +1,81 @@
+
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
+<!-- *** PAGINAS VISITADAS ***
+	https://stackoverflow.com/questions/31609623/remove-nearest-li-element-using-jquery
+	https://stackoverflow.com/questions/4981765/jquery-create-list-item-from-user-input-on-click
+	https://stackoverflow.com/questions/9236332/jquery-how-to-empty-input-field
 -->
 <html>
-    <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-        <meta name="format-detection" content="telephone=no">
-        <meta name="msapplication-tap-highlight" content="no">
-        <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
-        <title>Rock Band Searcher</title>
-        <script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
-    </head>
-    <body>
-      <button onclick="search_RockBand()">
-      <input id="textField" name="Search Rock Band" type="text"/>
-      <ol id="myList"></ol>
-      <script type="text/javascript">
-        function search_RockBand(){
-          var myTextField= document.getElementById("textField").value;
-          $.ajax({
-            method: "GET",
-            url: "https://musicbrainz.org/ws/2/artist?query=/"+myTextField+"/",
-            dataType: "json",   // necessitem això pq ens retorni un objecte JSON
-          }).done(function (msg) {
-            for(var item in msg.artists) {
-              console.log(msg.artists[item]);
-              var element = $("<li>"+JSON.stringify(msg.artists[item].name)+"</li>");
-              $("#myList").append(element);
-            };
-          }).fail(function () {
-  	         alert("ERROR");
-           });
-        }
-      </script>
-    </body>
+	<head>
+		<h1> My Favorite Movies </h1>
+		<title> Movies </title>
+		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
+	</head>
+	<body>
+		<ol id="myList"></ol>
+		<input id="valor" type="text"/>
+		<button id="boton" > Add Element </button>
+		<script type="text/javascript" >
+			var storage_size = localStorage.length;
+			for(var i=0; i<storage_size; i++){
+				var item = localStorage.getItem(localStorage.key(i));
+				var element = $("<li>"+item+"<button>Delete</button></li>");
+				$("#myList").append(element);
+			}
+			
+			<!-- Funcion para añadir elementos en la lista -->
+			function AddElement(){
+				var value = $("#valor").val();
+				localStorage.setItem(storage_size+1, value);
+				var element = $("<li>"+value+"<button>Delete</button></li>");
+				$("#myList").append(element);
+				$("#valor").val('');
+			}
+			
+			<!-- Funcion para eliminar elementos de la lista -->
+			$('#myList').on('click','button', function(){
+				var txt = $(this).closest("li").text();
+				var substr = txt.substr(0, txt.length-6);
+				var keys = Object.keys(localStorage);
+				for (var i = 0; i < localStorage.length; i++){
+					var texto = localStorage.getItem(localStorage.key(i));
+					if (texto == substr){
+						localStorage.removeItem(keys[i]);
+					}
+				}
+				$(this).closest("li").remove();
+			});
+			
+			$(document).ready( function ()  {
+				$('#boton').click(AddElement);
+			});
+		
+		</script>
+	</body>
+	<footer>
+		<p>Author: Ali Murtaza</p>
+		<p>GitHub: <a href="https://github.com/AliMurtaza98">
+		https://github.com/AliMurtaza98</a>.</p>
+	</footer>
+	<style>
+		#myList{
+			background-color: #e496ff;
+			font-weight:BOLD;
+			font-family:arial;
+		}
+		h1{
+			text-align:center;
+			color:#fc076d;
+			font-family: Times New Roman;
+		}
+		footer {
+			font-family:Arial;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			left: 0;
+			background-color:#edeff2;
+			text-align: center;
+			}
+	</style>
 </html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!-- *** PAGINAS VISITADAS ***
 	https://stackoverflow.com/questions/31609623/remove-nearest-li-element-using-jquery
@@ -11,35 +12,44 @@
 		<script src=https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js></script>
 	</head>
 	<body>
-		<ul id="myList"></ul>
-		<input id="valor" type="text">
-		<button onclick="AddElement()"> Add Element </button>
-		<!--Añadimos 3 elementos por defecto-->
-		<script type="text/javascript">
-			localStorage.clear();
-			localStorage.setItem("1", "Avengers: Endgame");
-			localStorage.setItem("2", "The Dark Knight");
-			localStorage.setItem("3", "Harry Potter and the Philosopher's Stone");
+		<ol id="myList"></ol>
+		<input id="valor" type="text"/>
+		<button id="boton" > Add Element </button>
+		<script type="text/javascript" >
 			var storage_size = localStorage.length;
 			for(var i=0; i<storage_size; i++){
 				var item = localStorage.getItem(localStorage.key(i));
 				var element = $("<li>"+item+"<button>Delete</button></li>");
 				$("#myList").append(element);
 			}
+			
 			<!-- Funcion para añadir elementos en la lista -->
 			function AddElement(){
 				var value = $("#valor").val();
 				localStorage.setItem(storage_size+1, value);
 				var element = $("<li>"+value+"<button>Delete</button></li>");
 				$("#myList").append(element);
-				$('#valor').val('')
+				$("#valor").val('');
 			}
+			
 			<!-- Funcion para eliminar elementos de la lista -->
-				$('ul').on('click','button', 
-				function(){
-				console.log('delete');
+			$('#myList').on('click','button', function(){
+				var txt = $(this).closest("li").text();
+				var substr = txt.substr(0, txt.length-6);
+				var keys = Object.keys(localStorage);
+				for (var i = 0; i < localStorage.length; i++){
+					var texto = localStorage.getItem(localStorage.key(i));
+					if (texto == substr){
+						localStorage.removeItem(keys[i]);
+					}
+				}
 				$(this).closest("li").remove();
-         });
+			});
+			
+			$(document).ready( function ()  {
+				$('#boton').click(AddElement);
+			});
+		
 		</script>
 	</body>
 	<footer>
@@ -55,6 +65,7 @@
 		}
 		h1{
 			text-align:center;
+			color:#fc076d;
 			font-family: Times New Roman;
 		}
 		footer {
@@ -68,4 +79,3 @@
 			}
 	</style>
 </html>
-	
